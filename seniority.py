@@ -35,16 +35,18 @@ def script():
     with open(file, 'r') as data_file:
         json_list = list(data_file)
 
-    for json_str in json_list:
-        result = json.loads(json_str)
-        seniority_key = result['company'] + result['title']
-        seniority_value = get_seniority_value(seniority_key, redis_client)
-        result['Seniority'] = seniority_value[0]
-        total_redis_read += seniority_value[1]
-        total_redis_write += seniority_value[2]
+        results = []
+        for json_str in json_list:
+            result = json.loads(json_str)
+            seniority_key = result['company'] + result['title']
+            seniority_value = get_seniority_value(seniority_key, redis_client)
+            result['Seniority'] = seniority_value[0]
+            total_redis_read += seniority_value[1]
+            total_redis_write += seniority_value[2]
+            results.append(json.dumps(result))
 
         with open('./data/output1.jsonl', 'a') as write_file:
-            write_file.write(json.dumps(result) + '\n')
+                write_file.write('\n'.join(results) + '\n')
     
     print(f"Redis read {total_redis_read}")
     print(f"Redis write {total_redis_write}")
@@ -53,6 +55,11 @@ def script():
 
 start_time = time.perf_counter()
 script()
+
+print(f"CPU load: {psutil.cpu_percent()}%")
+print(f"Available memory: {psutil.virtual_memory().available / (1024 ** 2)} MB")
+print(f"Disk I/O: {psutil.disk_io_counters()}")
+
 end_time = time.perf_counter()
 
 execution_time = end_time - start_time

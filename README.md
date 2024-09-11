@@ -40,6 +40,9 @@ start_time = time.process_time()
 end_time = time.process_time()
 total_cpu_time = end_time - start_time
 
+Redic CPU time:
+redis-cli INFO CPU | grep used_cpu
+
 
 **Learnings**
 Redis Memory: Checking the memory used in redis seemed high relative to number of key-value pairs in the cache. Cleared the cache, and saw memory usage hadn't changed much. Researched and learned that redis uses fragmentation (ratio was ~2.7). Decided to measure key-value pairs directly, so wrote script. 

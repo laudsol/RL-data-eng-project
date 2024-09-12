@@ -2,9 +2,10 @@ import json
 import uuid
 
 position_obj = {"url": "https://www.reveliolabs.com/job/97513c3d-b4a4-4bfb-b71e-f95d5482ed14/", "location": "New York, NY", "scraped_on":1721183915}
-files = ['./data/test1.jsonl', './data/test2.jsonl', './data/test3.jsonl', './data/test4.jsonl']
+files = ['../data/test1.jsonl', '../data/test2.jsonl', '../data/test3.jsonl', '../data/test4.jsonl']
 data_rows = [5500, 55000, 555000, 8000000]
-case = 3
+input_value = input("Select a case (0-3): ")
+case = int(input_value)
 unique_data = []
 
 copy_counter = 0

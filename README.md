@@ -6,7 +6,7 @@
 3) the gPRC endpoint for the seniority model starts to queue when more than 1000 calls are made per second. To simulate the time effects of the service, I added a 1ms sleep method to the code
 
 
-**Files**
+**Overview of files**
 The data directory should be used to hold data for testing the scripts. There are no files in it because pushing 5M rows of data to github is difficult and wasteful.
 
 The populate directory can be used to popualte data files using differnt methods. 
@@ -76,11 +76,11 @@ Hot Cache:
 12) To test the hot cache, I thought it important to change how the test data was populated. Much of the data would need to already exist in the cache to see real increases in efficiency. 
 13) I had worked on a script to populate data based on normal statistical distrubutions, but never had the oportunity to integrate this with the file in #12
 14) I expected the hot cache to take a lot more time reading when roles were not in the first layer. The eviction policy would also take up time.
-15) The gains from the top layer of the hot cache were nowhere near close enough to offset the extra time from the nested caching layer and the eviction analysis.
+15) The gains from the top layer of the hot cache were nowhere near close enough to offset the extra time from the nested caching layer and the eviction analysis. It performed much slower than the base case.
 16) It seems likely that performance gains from the hot-cache would be noticed with a much larger cache, and a better constructed set of test data
 
 
-**Learnings**
+**One-off learnings**
 1) Redis Memory: Checking the memory used in redis seemed high relative to number of key-value pairs in the cache. Cleared the cache, and saw memory usage hadn't changed much. Researched and learned that redis uses fragmentation (ratio was ~2.7). Decided to measure key-value pairs directly, so wrote script. 
 2) Profile Decorator: Can't use this to evaluate time of lines run in a loop because 
 3) Code was running much slower one day to another. Clearing caches and restart services helps, but running on AWS or similar should provide the most control and consistency

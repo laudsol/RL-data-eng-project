@@ -57,9 +57,7 @@ populate_unique_data(reused_keys)
 populate_unique_data(new_keys)
 
 for obj in unique_data:
-    # Convert byte values to strings (decode bytes to UTF-8 strings)
     cleaned_obj = {k: (v.decode('utf-8') if isinstance(v, bytes) else v) for k, v in obj.items()}
     
-    # Write the cleaned object to the file as JSON
     with open(files[case], 'a') as write_file:
         write_file.write(json.dumps(cleaned_obj) + '\n')
